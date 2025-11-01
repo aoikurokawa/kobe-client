@@ -6,5 +6,5 @@ pub struct StakerReward {
     /// Stake authority pubkey
     ///
     /// Filter by stake authority public key
-    stake_authority: Pubkey,
+    pub stake_authority: Pubkey,
 }
