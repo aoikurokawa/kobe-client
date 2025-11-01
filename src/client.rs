@@ -155,10 +155,10 @@ impl KobeClient {
     /// # Example
     ///
     /// ```no_run
-    /// # use jito_api_client::JitoClient;
+    /// # use kobe_client::client::KobeClient;
     /// # #[tokio::main]
     /// # async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    /// let client = JitoClient::mainnet();
+    /// let client = KobeClient::mainnet();
     /// let rewards = client.get_staker_rewards(Some(10)).await?;
     /// # Ok(())
     /// # }
