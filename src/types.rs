@@ -86,26 +86,101 @@ pub struct ValidatorsResponse {
 /// Validator information
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ValidatorInfo {
-    /// Validator vote account
-    pub vote_account: String,
+    /// Active stake
+    pub active_stake: Option<u64>,
 
-    /// MEV commission in basis points
-    pub mev_commission_bps: u16,
+    /// Commission number
+    pub commission: Option<u8>,
 
-    /// MEV rewards for the epoch (lamports)
-    pub mev_rewards: u64,
+    /// Consensus mods score
+    pub consensus_mods_score: Option<i8>,
 
-    /// Priority fee commission in basis points
+    /// Data center concentration score
+    pub data_center_concentration_score: Option<i64>,
+
+    /// Delinquent
+    pub delinquent: Option<bool>,
+
+    /// Epoch number
+    pub epoch: Option<u64>,
+
+    /// Epoch credits
+    pub epoch_credits: Option<u64>,
+
+    /// Identity account
+    pub identity_account: Option<String>,
+
+    /// MEV Commission BPS
+    pub mev_commission_bps: Option<u16>,
+
+    /// MEV revenue lamports
+    pub mev_revenue_lamports: Option<u64>,
+
+    /// Priority fee commission bps
     pub priority_fee_commission_bps: Option<u16>,
 
-    /// Priority fee rewards (lamports)
-    pub priority_fee_rewards: Option<u64>,
+    /// Priority fee revenue lamports
+    pub priority_fee_revenue_lamports: Option<u64>,
 
-    /// Whether the validator is running Jito
+    /// Name
+    pub name: Option<String>,
+
+    /// Published information score
+    pub published_information_score: Option<i64>,
+
+    /// Root distance score
+    pub root_distance_score: Option<i64>,
+
+    /// Whether or not running Jito client
     pub running_jito: bool,
 
-    /// Active stake amount (lamports)
-    pub active_stake: u64,
+    /// Whether or not running BAM client
+    pub running_bam: Option<bool>,
+
+    /// Software version
+    pub software_version: Option<String>,
+
+    /// Software version score
+    pub software_version_score: Option<i64>,
+
+    /// Skipped slot percent
+    pub skipped_slot_percent: Option<String>,
+
+    /// Skipped slot score
+    pub skipped_slot_score: Option<i64>,
+
+    /// Skipped slots
+    pub skipped_slots: Option<u64>,
+
+    /// Stake concentration score
+    pub stake_concentration_score: Option<i64>,
+
+    /// Stake percent
+    pub stake_percent: Option<f64>,
+
+    /// Target pool is the pool this cranker is managing
+    pub target_pool_active_lamports: Option<u64>,
+
+    /// Target pool transient lamports
+    pub target_pool_transient_lamports: Option<u64>,
+
+    /// Target pool staked
+    pub target_pool_staked: Option<bool>,
+
+    // Timestamp
+    // #[serde(with = "ts_seconds_option")]
+    // pub timestamp: Option<DateTime<Utc>>,
+    /// Vote account
+    pub vote_account: String,
+
+    /// Vote credit proportion
+    pub vote_credit_proportion: Option<f64>,
+
+    /// WWW URL
+    pub www_url: Option<String>,
+
+    /// Inflation lamports
+    pub inflation_rewards_lamports: Option<u64>,
 }
 
 /// Historical validator data

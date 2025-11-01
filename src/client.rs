@@ -1,12 +1,9 @@
 use std::time::Duration;
 
 use reqwest::{Client, Method, Response, StatusCode};
-use serde::Serialize;
-use serde::de::DeserializeOwned;
+use serde::{Serialize, de::DeserializeOwned};
 
-use crate::config::Config;
-use crate::error::KobeApiError;
-use crate::types::*;
+use crate::{config::Config, error::KobeApiError, types::*};
 
 /// Main client for interacting with Jito APIs
 #[derive(Debug, Clone)]
@@ -36,10 +33,6 @@ impl KobeClient {
     pub fn base_url(&self) -> &str {
         &self.config.base_url
     }
-
-    // ========================================================================
-    // Internal HTTP Methods
-    // ========================================================================
 
     /// Make a GET request
     async fn get<T: DeserializeOwned>(
@@ -140,10 +133,6 @@ impl KobeClient {
         matches!(error, KobeApiError::Timeout | KobeApiError::HttpError(_))
     }
 
-    // ========================================================================
-    // MEV & Staker Rewards API Methods
-    // ========================================================================
-
     /// Get staker rewards
     ///
     /// Retrieves individual claimable MEV and priority fee rewards from the tip distribution merkle trees.
@@ -213,10 +202,6 @@ impl KobeClient {
 
         self.get("/validator_rewards", &query).await
     }
-
-    // ========================================================================
-    // Stake Pool API Methods
-    // ========================================================================
 
     /// Get all validators for a given epoch
     ///
@@ -341,10 +326,6 @@ impl KobeClient {
         }
     }
 
-    // ========================================================================
-    // Convenience Methods
-    // ========================================================================
-
     /// Get the current epoch from the latest MEV rewards data
     pub async fn get_current_epoch(&self) -> Result<u64, KobeApiError> {
         let mev_rewards = self.get_mev_rewards(None).await?;
@@ -361,18 +342,18 @@ impl KobeClient {
             .collect())
     }
 
-    /// Get validators sorted by MEV rewards
-    pub async fn get_validators_by_mev_rewards(
-        &self,
-        epoch: Option<u64>,
-        limit: usize,
-    ) -> Result<Vec<ValidatorInfo>, KobeApiError> {
-        let mut response = self.get_validators(epoch).await?;
-        response
-            .validators
-            .sort_by(|a, b| b.mev_rewards.cmp(&a.mev_rewards));
-        Ok(response.validators.into_iter().take(limit).collect())
-    }
+    // Get validators sorted by MEV rewards
+    // pub async fn get_validators_by_mev_rewards(
+    //     &self,
+    //     epoch: Option<u64>,
+    //     limit: usize,
+    // ) -> Result<Vec<ValidatorInfo>, KobeApiError> {
+    //     let mut response = self.get_validators(epoch).await?;
+    //     response
+    //         .validators
+    //         .sort_by(|a, b| b.mev_rewards.cmp(&a.mev_rewards));
+    //     Ok(response.validators.into_iter().take(limit).collect())
+    // }
 
     /// Get validators sorted by active stake
     pub async fn get_validators_by_stake(
@@ -401,18 +382,18 @@ impl KobeClient {
             .unwrap_or(false))
     }
 
-    /// Get validator MEV commission
-    pub async fn get_validator_mev_commission(
-        &self,
-        vote_account: &str,
-    ) -> Result<Option<u16>, KobeApiError> {
-        let response = self.get_validators(None).await?;
-        Ok(response
-            .validators
-            .iter()
-            .find(|v| v.vote_account == vote_account)
-            .map(|v| v.mev_commission_bps))
-    }
+    // Get validator MEV commission
+    // pub async fn get_validator_mev_commission(
+    //     &self,
+    //     vote_account: &str,
+    // ) -> Result<Option<u16>, KobeApiError> {
+    //     let response = self.get_validators(None).await?;
+    //     Ok(response
+    //         .validators
+    //         .iter()
+    //         .find(|v| v.vote_account == vote_account)
+    //         .map(|v| v.mev_commission_bps))
+    // }
 
     /// Calculate total MEV rewards for a time period
     pub async fn calculate_total_mev_rewards(
