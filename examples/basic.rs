@@ -1,4 +1,4 @@
-use kobe_client::KobeClient;
+use kobe_client::client::KobeClient;
 
 #[tokio::main]
 async fn main() {
@@ -9,12 +9,12 @@ async fn main() {
 
     // 1. Get current epoch
     println!("1. Getting current epoch...");
-    let current_epoch = client.get_current_epoch().await?;
+    let current_epoch = client.get_current_epoch().await.unwrap();
     println!("   Current epoch: {}\n", current_epoch);
 
     // 2. Get staker rewards
     println!("2. Getting staker rewards (limit 5)...");
-    let rewards = client.get_staker_rewards(Some(5)).await?;
+    let rewards = client.get_staker_rewards(Some(5)).await.unwrap();
     println!("   Found {} staker rewards:", rewards.rewards.len());
     for (i, reward) in rewards.rewards.iter().enumerate() {
         println!(
@@ -30,7 +30,7 @@ async fn main() {
 
     // 3. Get validator information
     println!("3. Getting validators running Jito...");
-    let jito_validators = client.get_jito_validators().await?;
+    let jito_validators = client.get_jito_validators().await.unwrap();
     println!("   Found {} validators running Jito", jito_validators.len());
 
     // Show top 5 by stake
@@ -48,7 +48,7 @@ async fn main() {
 
     // 4. Get network MEV statistics
     println!("4. Getting MEV network statistics...");
-    let mev_stats = client.get_mev_rewards(None).await?;
+    let mev_stats = client.get_mev_rewards(None).await.unwrap();
     println!("   Epoch: {}", mev_stats.epoch);
     println!(
         "   Total Network MEV: {} lamports",
@@ -66,7 +66,7 @@ async fn main() {
 
     // 5. Get validator rewards
     println!("5. Getting validator rewards...");
-    let validator_rewards = client.get_validator_rewards(None, Some(3)).await?;
+    let validator_rewards = client.get_validator_rewards(None, Some(3)).await.unwrap();
     println!("   Top 3 validators by rewards:");
     for (i, validator) in validator_rewards.validators.iter().enumerate() {
         println!(
@@ -86,7 +86,8 @@ async fn main() {
     if let Some(first_validator) = jito_validators.first() {
         let history = client
             .get_validator_history(&first_validator.vote_account)
-            .await?;
+            .await
+            .unwrap();
         println!("   Validator: {}", &first_validator.vote_account[..8]);
         println!("   Historical data (last 3 epochs):");
         for (i, entry) in history.iter().take(3).enumerate() {
@@ -102,7 +103,7 @@ async fn main() {
 
     // 7. Get MEV commission averages
     println!("7. Getting MEV commission averages...");
-    let commission_avg = client.get_mev_commission_average_over_time().await?;
+    let commission_avg = client.get_mev_commission_average_over_time().await.unwrap();
     println!(
         "   Aggregated MEV Rewards: {} lamports",
         commission_avg.aggregated_mev_rewards
@@ -118,13 +119,17 @@ async fn main() {
     // 8. Check specific validator
     println!("8. Checking specific validator status...");
     let test_vote_account = "GdRKUZKdiXMEATjddQW6q4W8bPgXRBYJKayfeqdQcEPa";
-    let is_running_jito = client.is_validator_running_jito(test_vote_account).await?;
+    let is_running_jito = client
+        .is_validator_running_jito(test_vote_account)
+        .await
+        .unwrap();
     println!("   Vote Account: {}", &test_vote_account[..8]);
     println!("   Running Jito: {}", is_running_jito);
 
     if let Some(commission) = client
         .get_validator_mev_commission(test_vote_account)
-        .await?
+        .await
+        .unwrap()
     {
         println!("   MEV Commission: {} bps", commission);
     }
@@ -136,7 +141,8 @@ async fn main() {
     let end_epoch = current_epoch.saturating_sub(1);
     let total_mev = client
         .calculate_total_mev_rewards(start_epoch, end_epoch)
-        .await?;
+        .await
+        .unwrap();
     println!(
         "   Total MEV from epoch {} to {}: {} lamports",
         start_epoch, end_epoch, total_mev
