@@ -1,10 +1,10 @@
-# Jito API Client
+# Kobe Client
 
 A comprehensive, async Rust client library for interacting with [Jito Network](https://jito.network/) APIs.
 
-[![Crates.io](https://img.shields.io/crates/v/jito-api-client.svg)](https://crates.io/crates/kobe-api-client)
-[![Documentation](https://docs.rs/jito-api-client/badge.svg)](https://docs.rs/jito-api-client)
-[![License](https://img.shields.io/crates/l/jito-api-client.svg)](LICENSE)
+[![Crates.io](https://img.shields.io/crates/v/kobe-client.svg)](https://crates.io/crates/kobe-client)
+[![Documentation](https://docs.rs/kobe-client/badge.svg)](https://docs.rs/kobe-client)
+[![License](https://img.shields.io/crates/l/kobe-client.svg)](LICENSE)
 
 ## Features
 
@@ -23,7 +23,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-jito-api-client = "0.1"
+kobe-client = "0.1"
 tokio = { version = "1", features = ["full"] }
 ```
 
