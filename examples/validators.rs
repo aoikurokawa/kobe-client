@@ -15,5 +15,5 @@ async fn main() {
 
     let validators = client.get_validators(Some(current_epoch)).await.unwrap();
 
-    println!("Validators Length: {}", validators.validators.len());
+    println!("Found {} validators", validators.validators.len());
 }

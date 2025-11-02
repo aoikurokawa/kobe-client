@@ -16,7 +16,7 @@ async fn main() {
     let jitosol_validators = client.get_jitosol_validators(Some(873)).await.unwrap();
 
     println!(
-        "Jito SOL Validators Length: {}",
+        "Found {} jito_sol Validators",
         jitosol_validators.validators.len()
     );
 }
