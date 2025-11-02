@@ -19,6 +19,12 @@ pub struct Config {
     pub max_retries: u32,
 }
 
+impl Default for Config {
+    fn default() -> Self {
+        Self::mainnet()
+    }
+}
+
 impl Config {
     /// Create a new configuration with mainnet defaults
     pub fn mainnet() -> Self {
@@ -64,11 +70,5 @@ impl Config {
     pub fn with_max_retries(mut self, max_retries: u32) -> Self {
         self.max_retries = max_retries;
         self
-    }
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Self::mainnet()
     }
 }
