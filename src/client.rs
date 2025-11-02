@@ -245,10 +245,10 @@ impl KobeClient {
     /// # Arguments
     ///
     /// * `vote_account` - The validator's vote account public key
-    pub async fn get_validator_history(
+    pub async fn get_validator_info_by_vote_account(
         &self,
         vote_account: &str,
-    ) -> Result<Vec<ValidatorHistory>, KobeApiError> {
+    ) -> Result<Vec<ValidatorByVoteAccount>, KobeApiError> {
         self.get(&format!("/validators/{}", vote_account), "").await
     }
 

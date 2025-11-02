@@ -11,9 +11,12 @@ async fn main() {
         .build();
 
     let current_epoch = client.get_current_epoch().await.unwrap();
-    println!("   Current epoch: {}\n", current_epoch);
+    println!("Current epoch: {}\n", current_epoch);
 
     let jitosol_validators = client.get_jitosol_validators(Some(873)).await.unwrap();
 
-    println!("Jito SOL Validators: {jitosol_validators:?}");
+    println!(
+        "Jito SOL Validators Length: {}",
+        jitosol_validators.validators.len()
+    );
 }

@@ -10,10 +10,12 @@ async fn main() {
         .max_retries(5)
         .build();
 
-    let current_epoch = client.get_current_epoch().await.unwrap();
-    println!("Current epoch: {}\n", current_epoch);
+    let vote_account = "J1to1yufRnoWn81KYg1XkTWzmKjnYSnmE2VY8DGUJ9Qv";
 
-    let validators = client.get_validators(Some(current_epoch)).await.unwrap();
+    let validator_info = client
+        .get_validator_info_by_vote_account(vote_account)
+        .await
+        .unwrap();
 
-    println!("Validators Length: {}", validators.validators.len());
+    println!("Validator Info Length: {}", validator_info.len());
 }
