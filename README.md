@@ -62,9 +62,9 @@ async fn main() -> anyhow::Result<()> {
 #### Get Staker Rewards
 
 ```rust
-use jito_api_client::JitoClient;
+use kobe_client::client::KobeClient;
 
-let client = JitoClient::mainnet();
+let client = KobeClient::mainnet();
 
 // Get top 5 staker rewards
 let rewards = client.get_staker_rewards(Some(5)).await?;
@@ -195,10 +195,11 @@ println!("Total MEV from epoch 600-610: {} lamports", total_mev);
 ### Using the Builder Pattern
 
 ```rust
-use jito_api_client::JitoClientBuilder;
 use std::time::Duration;
 
-let client = JitoClientBuilder::new()
+use kobe_client::client::KobeClientBuilder;
+
+let client = KobeClientBuilder::new()
     .timeout(Duration::from_secs(60))
     .user_agent("my-app/1.0")
     .retry(true)
@@ -209,7 +210,7 @@ let client = JitoClientBuilder::new()
 ### Using Config
 
 ```rust
-use jito_api_client::{JitoClient, Config};
+use kobe_client::{KobeClient, Config};
 use std::time::Duration;
 
 let config = Config::mainnet()
@@ -233,9 +234,9 @@ let client = JitoClient::new(config);
 The library provides detailed error types:
 
 ```rust
-use jito_api_client::{JitoClient, JitoError};
+use kobe_client::{KobeClient, JitoError};
 
-let client = JitoClient::mainnet();
+let client = KobeClient::mainnet();
 
 match client.get_staker_rewards(Some(10)).await {
     Ok(rewards) => println!("Success: {} rewards", rewards.rewards.len()),
@@ -257,7 +258,7 @@ match client.get_staker_rewards(Some(10)).await {
 ### Query Parameters
 
 ```rust
-use jito_api_client::QueryParams;
+use kobe_client::QueryParams;
 
 let params = QueryParams::default()
     .limit(50)
@@ -272,7 +273,7 @@ let rewards = client.get_staker_rewards_with_params(&params).await?;
 The client automatically retries failed requests with exponential backoff. You can configure this behavior:
 
 ```rust
-let client = JitoClientBuilder::new()
+let client = KobeClientBuilder::new()
     .retry(true)           // Enable retries
     .max_retries(3)        // Maximum 3 retry attempts
     .build();
