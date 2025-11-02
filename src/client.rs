@@ -309,19 +309,19 @@ impl KobeClient {
         self.post("/jitosol_sol_ratio", Some(&request)).await
     }
 
-    /// Get stake pool statistics for an epoch
+    /// Get stake pool statistics
     ///
-    /// # Arguments
-    ///
-    /// * `epoch` - Optional epoch number (defaults to latest)
+    /// Returns stake pool analytics including TVL, APY, validator count, supply metrics,
+    /// and aggregated MEV rewards over time.
+    /// ```
     pub async fn get_stake_pool_stats(
         &self,
-        epoch: Option<u64>,
+        request: Option<&StakePoolStatsRequest>,
     ) -> Result<StakePoolStats, KobeApiError> {
-        if let Some(epoch) = epoch {
-            self.post("/stake_pool_stats", Some(&EpochRequest { epoch }))
-                .await
+        if let Some(req) = request {
+            self.post("/stake_pool_stats", Some(req)).await
         } else {
+            // GET request for default (last 7 days)
             self.get("/stake_pool_stats", "").await
         }
     }

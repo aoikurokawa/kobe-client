@@ -207,29 +207,26 @@ pub struct JitoSolRatio {
     pub ratios: Vec<TimeSeriesData<f64>>,
 }
 
-/// Stake pool statistics
+/// Stake pool statistics response
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StakePoolStats {
-    /// Epoch
-    pub epoch: u64,
+    /// Total aggregated MEV rewards across all time periods (lamports)
+    pub aggregated_mev_rewards: u64,
 
-    /// Total stake pool value (lamports)
-    pub total_lamports: u64,
+    /// Time series data of MEV rewards
+    pub mev_rewards: Vec<TimeSeriesData<u64>>,
 
-    /// JitoSOL supply
-    pub jitosol_supply: f64,
+    /// Time series data of Total Value Locked (lamports)
+    pub tvl: Vec<TimeSeriesData<u64>>,
 
-    /// Current exchange ratio
-    pub exchange_ratio: f64,
+    /// Time series data of Annual Percentage Yield (decimal, e.g., 0.07 = 7%)
+    pub apy: Vec<TimeSeriesData<f64>>,
 
-    /// Annual percentage yield
-    pub apy: f64,
+    /// Time series data of validator count
+    pub num_validators: Vec<TimeSeriesData<u64>>,
 
-    /// Number of validators
-    pub num_validators: u64,
-
-    /// Total MEV earned
-    pub total_mev_earned: u64,
+    /// Time series data of JitoSOL token supply
+    pub supply: Vec<TimeSeriesData<f64>>,
 }
 
 // ============================================================================
@@ -260,9 +257,94 @@ pub struct RangeRequest {
     pub range_filter: RangeFilter,
 }
 
-// ============================================================================
-// StakeNet API Types (on-chain data)
-// ============================================================================
+/// Sort configuration for stake pool stats
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SortBy {
+    /// Sort field (currently only "BlockTime" is supported)
+    pub field: String,
+
+    /// Sort order: "Asc" or "Desc"
+    pub order: String,
+}
+
+impl Default for SortBy {
+    fn default() -> Self {
+        Self {
+            field: "BlockTime".to_string(),
+            order: "Asc".to_string(),
+        }
+    }
+}
+
+/// Request for stake pool statistics
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct StakePoolStatsRequest {
+    /// Time bucket aggregation type (currently only "Daily" is supported)
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub bucket_type: Option<String>,
+
+    /// Date range filter
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub range_filter: Option<RangeFilter>,
+
+    /// Sort configuration
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub sort_by: Option<SortBy>,
+}
+
+impl StakePoolStatsRequest {
+    /// Create a new request with default values
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Set bucket type (currently only "Daily" is supported)
+    pub fn with_bucket_type(mut self, bucket_type: impl Into<String>) -> Self {
+        self.bucket_type = Some(bucket_type.into());
+        self
+    }
+
+    /// Set range filter
+    pub fn with_range_filter(mut self, start: DateTime<Utc>, end: DateTime<Utc>) -> Self {
+        self.range_filter = Some(RangeFilter { start, end });
+        self
+    }
+
+    /// Set sort configuration
+    pub fn with_sort_by(mut self, field: impl Into<String>, order: impl Into<String>) -> Self {
+        self.sort_by = Some(SortBy {
+            field: field.into(),
+            order: order.into(),
+        });
+        self
+    }
+
+    /// Set sort order to ascending
+    pub fn sort_asc(mut self) -> Self {
+        if let Some(ref mut sort) = self.sort_by {
+            sort.order = "Asc".to_string();
+        } else {
+            self.sort_by = Some(SortBy {
+                field: "BlockTime".to_string(),
+                order: "Asc".to_string(),
+            });
+        }
+        self
+    }
+
+    /// Set sort order to descending
+    pub fn sort_desc(mut self) -> Self {
+        if let Some(ref mut sort) = self.sort_by {
+            sort.order = "Desc".to_string();
+        } else {
+            self.sort_by = Some(SortBy {
+                field: "BlockTime".to_string(),
+                order: "Desc".to_string(),
+            });
+        }
+        self
+    }
+}
 
 /// Validator history account data
 #[derive(Debug, Clone, Serialize, Deserialize)]
