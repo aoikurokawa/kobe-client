@@ -269,11 +269,11 @@ impl KobeClient {
         }
     }
 
-    /// Get daily MEV tips
+    /// Get daily MEV rewards
     ///
-    /// Returns aggregated MEV tips per calendar day.
-    pub async fn get_daily_mev_tips(&self) -> Result<Vec<DailyMevTips>, KobeApiError> {
-        self.get("/daily_mev_tips", "").await
+    /// Returns aggregated MEV rewards per calendar day.
+    pub async fn get_daily_mev_rewards(&self) -> Result<Vec<DailyMevRewards>, KobeApiError> {
+        self.get("/daily_mev_rewards", "").await
     }
 
     /// Get Jito stake over time

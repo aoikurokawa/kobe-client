@@ -144,7 +144,7 @@ pub struct MevRewards {
 
 /// Daily MEV tips data
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct DailyMevTips {
+pub struct DailyMevRewards {
     /// Date of the tips
     pub day: DateTime<Utc>,
 
