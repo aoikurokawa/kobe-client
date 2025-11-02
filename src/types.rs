@@ -107,7 +107,7 @@ pub struct ValidatorInfo {
     pub active_stake: u64,
 }
 
-/// Historical validator data
+/// Validator data for a specific epoch
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ValidatorByVoteAccount {
     /// Epoch
