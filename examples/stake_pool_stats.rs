@@ -16,8 +16,7 @@ async fn main() {
 
     let end = Utc::now();
 
-    let day = 60 * 60 * 24;
-    let start = end - Duration::from_secs(day);
+    let start = end - chrono::Duration::days(1);
     let request = StakePoolStatsRequest::new()
         .with_bucket_type("Daily")
         .with_range_filter(start, end)

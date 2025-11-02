@@ -313,7 +313,6 @@ impl KobeClient {
     ///
     /// Returns stake pool analytics including TVL, APY, validator count, supply metrics,
     /// and aggregated MEV rewards over time.
-    /// ```
     pub async fn get_stake_pool_stats(
         &self,
         request: Option<&StakePoolStatsRequest>,
