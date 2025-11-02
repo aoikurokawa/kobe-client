@@ -30,12 +30,12 @@ tokio = { version = "1", features = ["full"] }
 ## Quick Start
 
 ```rust
-use jito_api_client::{JitoClient, Result};
+use kobe_client::client::KobeClient;
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> anyhow::Result<()> {
     // Create a client with mainnet defaults
-    let client = JitoClient::mainnet();
+    let client = KobeClient::mainnet();
 
     // Get staker rewards
     let rewards = client.get_staker_rewards(Some(10)).await?;
