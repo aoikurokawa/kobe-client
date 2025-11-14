@@ -29,6 +29,11 @@ impl KobeClient {
         Self::new(Config::mainnet())
     }
 
+    /// Create a client with mainnet defaults
+    pub fn testnet() -> Self {
+        Self::new(Config::mainnet())
+    }
+
     /// Get the base URL
     pub fn base_url(&self) -> &str {
         &self.config.base_url
