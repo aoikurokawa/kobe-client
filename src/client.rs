@@ -29,7 +29,7 @@ impl KobeClient {
         Self::new(Config::mainnet())
     }
 
-    /// Create a client with mainnet defaults
+    /// Create a client with testnet defaults
     pub fn testnet() -> Self {
         Self::new(Config::testnet())
     }
