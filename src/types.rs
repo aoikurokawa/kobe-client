@@ -229,6 +229,16 @@ pub struct StakePoolStats {
     pub supply: Vec<TimeSeriesData<f64>>,
 }
 
+/// BAM Delegation Blacklist response
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct BamDelegationBlacklistEntry {
+    /// Vote account address
+    vote_account: String,
+
+    /// Added epoch
+    added_epoch: u64,
+}
+
 // ============================================================================
 // Request Types
 // ============================================================================

@@ -415,6 +415,15 @@ impl KobeClient {
 
         Ok(total)
     }
+
+    /// Get BAM Delegation Blacklist
+    ///
+    /// Returns bam delegation blacklist
+    pub async fn get_bam_delegation_blacklist(
+        &self,
+    ) -> Result<Vec<BamDelegationBlacklistEntry>, KobeApiError> {
+        self.get("/bam_delegation_blacklist", "").await
+    }
 }
 
 #[cfg(test)]
