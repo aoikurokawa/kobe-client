@@ -233,10 +233,10 @@ pub struct StakePoolStats {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BamDelegationBlacklistEntry {
     /// Vote account address
-    vote_account: String,
+    pub vote_account: String,
 
     /// Added epoch
-    added_epoch: u64,
+    pub added_epoch: u64,
 }
 
 // ============================================================================
