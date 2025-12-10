@@ -1,6 +1,9 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
+pub mod bam_epoch_metrics;
+pub mod bam_validators;
+
 /// Staker rewards response from the API
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StakerRewardsResponse {
