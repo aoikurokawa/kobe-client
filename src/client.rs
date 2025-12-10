@@ -3,7 +3,11 @@ use std::time::Duration;
 use reqwest::{Client, Method, Response, StatusCode};
 use serde::{Serialize, de::DeserializeOwned};
 
-use crate::{config::Config, error::KobeApiError, types::*};
+use crate::{
+    config::Config,
+    error::KobeApiError,
+    types::{bam_epoch_metrics::BamEpochMetricsResponse, bam_validators::BamValidatorsResponse, *},
+};
 
 /// Main client for interacting with Jito APIs
 #[derive(Debug, Clone)]
@@ -423,6 +427,28 @@ impl KobeClient {
         &self,
     ) -> Result<Vec<BamDelegationBlacklistEntry>, KobeApiError> {
         self.get("/bam_delegation_blacklist", "").await
+    }
+
+    /// Get BAM Epoch Metrics
+    ///
+    /// Returns bam epoch metrics
+    pub async fn get_bam_epoch_metrics(
+        &self,
+        epoch: u64,
+    ) -> Result<BamEpochMetricsResponse, KobeApiError> {
+        let query = format!("?epoch={epoch}");
+        self.get("/bam_epoch_metrics", &query).await
+    }
+
+    /// Get BAM Validators
+    ///
+    /// Returns bam validators
+    pub async fn get_bam_validators(
+        &self,
+        epoch: u64,
+    ) -> Result<BamValidatorsResponse, KobeApiError> {
+        let query = format!("?epoch={epoch}");
+        self.get("/bam_validators", &query).await
     }
 }
 
