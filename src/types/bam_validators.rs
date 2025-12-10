@@ -15,7 +15,7 @@ pub struct BamValidator {
     /// Is eligible validator
     pub is_eligible: bool,
 
-    // The reason of ineligibility
+    /// The reason of ineligibility
     pub ineligibility_reason: Option<String>,
 
     /// Timestamp
@@ -26,6 +26,7 @@ pub struct BamValidator {
     pub vote_account: String,
 }
 
+/// BAM validators response
 #[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub struct BamValidatorsResponse {
     pub bam_validators: Vec<BamValidator>,

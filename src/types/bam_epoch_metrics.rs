@@ -29,7 +29,7 @@ pub struct BamEpochMetrics {
     pub total_stake: u64,
 }
 
-/// BAM Delegation Blacklist response
+/// BAM epoch metrics response
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BamEpochMetricsResponse {
     /// BAM Epoch metrics
