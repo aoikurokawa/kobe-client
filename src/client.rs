@@ -6,7 +6,10 @@ use serde::{Serialize, de::DeserializeOwned};
 use crate::{
     config::Config,
     error::KobeApiError,
-    types::{bam_epoch_metrics::BamEpochMetricsResponse, bam_validators::BamValidatorsResponse, *},
+    types::{
+        bam_epoch_metrics::BamEpochMetricsResponse, bam_validators::BamValidatorsResponse,
+        coinbase_balance::CoinbaseBalanceResponse, *,
+    },
 };
 
 /// Main client for interacting with Jito APIs
@@ -449,6 +452,17 @@ impl KobeClient {
     ) -> Result<BamValidatorsResponse, KobeApiError> {
         let query = format!("?epoch={epoch}");
         self.get("/bam_validators", &query).await
+    }
+
+    /// Get Coinbase Balance
+    ///
+    /// Returns coinbase balance
+    pub async fn get_coinbase_balance(
+        &self,
+        epoch: u64,
+    ) -> Result<CoinbaseBalanceResponse, KobeApiError> {
+        let query = format!("?epoch={epoch}");
+        self.get("/coinbase_balance", &query).await
     }
 }
 
