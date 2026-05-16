@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod bam_epoch_metrics;
 pub mod bam_validators;
+pub mod coinbase_balance;
 
 /// Staker rewards response from the API
 #[derive(Debug, Clone, Serialize, Deserialize)]
