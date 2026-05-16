@@ -375,7 +375,7 @@ impl KobeClient {
         let mut response = self.get_validators(epoch).await?;
         response
             .validators
-            .sort_by(|a, b| b.active_stake.cmp(&a.active_stake));
+            .sort_by_key(|b| std::cmp::Reverse(b.active_stake));
         Ok(response.validators.into_iter().take(limit).collect())
     }
 
