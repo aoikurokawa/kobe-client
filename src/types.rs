@@ -86,6 +86,9 @@ pub struct ValidatorsResponse {
 /// Validator information
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ValidatorInfo {
+    /// Identity account
+    pub identity_account: Option<String>,
+
     /// Validator vote account
     pub vote_account: String,
 
@@ -106,6 +109,9 @@ pub struct ValidatorInfo {
 
     /// Whether the validator is running BAM
     pub running_bam: Option<bool>,
+
+    /// BAM connection rate
+    pub bam_connection_rate: Option<f64>,
 
     /// Active stake amount (lamports)
     pub active_stake: u64,
